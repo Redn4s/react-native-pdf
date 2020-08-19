@@ -474,7 +474,9 @@ const float MIN_SCALE = 1.0f;
     //_pdfView.scaleFactor = _pdfView.minScaleFactor;
     
     CGPoint point = [sender locationInView:self];
+    RCTLog(point);
     PDFPage *pdfPage = [_pdfView pageForPoint:point nearest:NO];
+    RCTLog(*pdfPage);
     if (pdfPage) {
         unsigned long page = [_pdfDocument indexForPage:pdfPage];
         _onChange(@{ @"message": [[NSString alloc] initWithString:[NSString stringWithFormat:@"pageSingleTap|%lu|%f|%f", page+1, point.x, point.y]]});
