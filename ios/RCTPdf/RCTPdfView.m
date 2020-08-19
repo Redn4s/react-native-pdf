@@ -476,8 +476,17 @@ const float MIN_SCALE = 1.0f;
     CGPoint point = [sender locationInView:self];
     NSLog(@"x: %f", point.x);
     NSLog(@"y: %f", point.y);
-
+    
+    // - (PDFPage *)pageForPoint:(CGPoint)point nearest:(BOOL)nearest;
+    // - OUTPUTpageForPoint:INPUT nearest:INPUT;
     PDFPage *pdfPage = [_pdfView pageForPoint:point nearest:NO];
+    
+    // - (CGPoint)convertPoint:(CGPoint)point toPage:(PDFPage *)page;
+    // - OUTPUTconvertPoint:INPUT toPage:INPUT;
+    
+    CGPoint pdfPoint = [_pdfView convertPoint:point toPage:pdfPage];
+    NSLog(@"pdfx: %f", pdfPoint.x);
+    NSLog(@"pdfy: %f", pdfPoint.y);
 
     if (pdfPage) {
         unsigned long page = [_pdfDocument indexForPage:pdfPage];
