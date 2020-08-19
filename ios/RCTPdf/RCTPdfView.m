@@ -474,7 +474,8 @@ const float MIN_SCALE = 1.0f;
     //_pdfView.scaleFactor = _pdfView.minScaleFactor;
     
     CGPoint point = [sender locationInView:self];
-    NSLog(@"Value of hello = %@", point);
+    NSLog(@"x: %f", point.x);
+    NSLog(@"y: %f", point.y);
 
     PDFPage *pdfPage = [_pdfView pageForPoint:point nearest:NO];
 
