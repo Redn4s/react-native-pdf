@@ -22,6 +22,8 @@
     "url": "https://github.com/wonday/react-native-pdf/issues"
   },
   "dependencies": {
+    "@react-native-community/progress-bar-android": "^1.0.3",
+    "@react-native-community/progress-view": "^1.1.1",
     "react": "16.8.6",
     "react-native": "0.60.4",
     "react-native-orientation-locker": "^1.1.6",
