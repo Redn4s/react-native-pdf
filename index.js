@@ -18,9 +18,6 @@ import {
     Image
 } from 'react-native';
 
-import { ProgressBar } from '@react-native-community/progress-bar-android'
-import { ProgressView } from '@react-native-community/progress-view'
-
 import RNFetchBlob from 'rn-fetch-blob';
 
 const SHA1 = require('crypto-js/sha1');
@@ -393,56 +390,37 @@ export default class Pdf extends Component {
         if (Platform.OS === "android" || Platform.OS === "ios") {
                 return (
                     <View style={[this.props.style,{overflow: 'hidden'}]}>
-                        {!this.state.isDownloaded?
-                            (<View
-                                style={styles.progressContainer}
-                            >
-                                {this.props.activityIndicator
-                                    ? this.props.activityIndicator
-                                    : Platform.OS === 'android'
-                                        ? <ProgressBar
-                                            progress={this.state.progress}
-                                            indeterminate={false}
-                                            styleAttr="Horizontal"
-                                            style={styles.progressBar}
-                                            {...this.props.activityIndicatorProps}
-                                        />
-                                        : <ProgressView
-                                            progress={this.state.progress}
-                                            style={styles.progressBar}
-                                            {...this.props.activityIndicatorProps}
-                                        />}
-                            </View>):(
-                                Platform.OS === "android"?(
+                        {this.state.isDownloaded && (
+                            Platform.OS === "android" ? (
+                                <PdfCustom
+                                    ref={component => (this._root = component)}
+                                    {...this.props}
+                                    style={[{flex:1,backgroundColor: '#EEE'}, this.props.style]}
+                                    path={this.state.path}
+                                    onChange={this._onChange}
+                                />
+                            ) : (
+                                this.props.usePDFKit && this.state.isSupportPDFKit === 1?(
                                         <PdfCustom
                                             ref={component => (this._root = component)}
                                             {...this.props}
-                                            style={[{flex:1,backgroundColor: '#EEE'}, this.props.style]}
+                                            style={[{backgroundColor: '#EEE',overflow: 'hidden'}, this.props.style]}
                                             path={this.state.path}
                                             onChange={this._onChange}
                                         />
-                                    ):(
-                                        this.props.usePDFKit && this.state.isSupportPDFKit === 1?(
-                                                <PdfCustom
-                                                    ref={component => (this._root = component)}
-                                                    {...this.props}
-                                                    style={[{backgroundColor: '#EEE',overflow: 'hidden'}, this.props.style]}
-                                                    path={this.state.path}
-                                                    onChange={this._onChange}
-                                                />
-                                            ):(<PdfView
-                                                {...this.props}
-                                                style={[{backgroundColor: '#EEE',overflow: 'hidden'}, this.props.style]}
-                                                path={this.state.path}
-                                                onLoadComplete={this.props.onLoadComplete}
-                                                onPageChanged={this.props.onPageChanged}
-                                                onError={this._onError}
-                                                onPageSingleTap={this.props.onPageSingleTap}
-                                                onScaleChanged={this.props.onScaleChanged}
-                                                onPressLink={this.props.onPressLink}
-                                            />)
-                                    )
-                                )}
+                                    ):(<PdfView
+                                        {...this.props}
+                                        style={[{backgroundColor: '#EEE',overflow: 'hidden'}, this.props.style]}
+                                        path={this.state.path}
+                                        onLoadComplete={this.props.onLoadComplete}
+                                        onPageChanged={this.props.onPageChanged}
+                                        onError={this._onError}
+                                        onPageSingleTap={this.props.onPageSingleTap}
+                                        onScaleChanged={this.props.onScaleChanged}
+                                        onPressLink={this.props.onPressLink}
+                                    />)
+                            )
+                        )}
                     </View>);
         } else {
             return (null);
