@@ -183,8 +183,18 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
 
         showLog(format("page / %s", page));
 
-        float xReal = xPositionInRealScale - ((page - 1) * this.getPageSize(page).getWidth());
-        float yReal = yPositionInRealScale - ((page - 1) * this.getPageSize(page).getHeight());
+        float xReal;
+        float yReal;
+
+        showLog(format("isSwipeVertical / %s", this.isSwipeVertical()));
+
+        if (this.isSwipeVertical()) {
+            xReal = xPositionInRealScale;
+            yReal = yPositionInRealScale - ((page - 1) * this.getPageSize(page).getHeight());
+        } else {
+            xReal = xPositionInRealScale - ((page - 1) * this.getPageSize(page).getWidth());
+            yReal = yPositionInRealScale;
+        }
 
         showLog(format("xReal %s / yReal %s", xReal, yReal));
 
