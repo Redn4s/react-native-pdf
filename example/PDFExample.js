@@ -127,6 +127,8 @@ export default class PDFExample extends React.Component {
                          source={source}
                          scale={this.state.scale}
                          horizontal={this.state.horizontal}
+                         spacing={0}
+                         enablePaging={true}
                          onLoadComplete={(numberOfPages, filePath,{width,height},tableContents) => {
                              this.setState({
                                 numberOfPages: numberOfPages
