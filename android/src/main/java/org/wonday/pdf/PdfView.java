@@ -160,19 +160,28 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
         //Constants.Pinch.MINIMUM_ZOOM = this.minScale;
         //Constants.Pinch.MAXIMUM_ZOOM = this.maxScale;
 
+        showLog(format("page getWidth / %s", this.getPageSize(page).getWidth()));
+        showLog(format("page getHeight / %s", this.getPageSize(page).getHeight()));
+
+        showLog(format("getX / %s", e.getX()));
+        showLog(format("getY / %s", e.getY()));
+
+        showLog(format("getCurrentXOffset / %s", -this.getCurrentXOffset()));
+        showLog(format("getCurrentYOffset / %s", -this.getCurrentYOffset()));
+
         float xPositionInRealScale = this.toRealScale(-this.getCurrentXOffset() + e.getX());
         float yPositionInRealScale = this.toRealScale(-this.getCurrentYOffset() + e.getY());
+
+        showLog(format("xPositionInRealScale / %s", xPositionInRealScale));
+        showLog(format("yPositionInRealScale / %s", yPositionInRealScale));
 
         float xPer = xPositionInRealScale / this.getPageSize(page).getWidth() * 100;
         float yPer = yPositionInRealScale / this.getPageSize(page).getHeight() * 100;
 
-        float xReal = xPer * this.getPageSize(page).getWidth();
-        float yReal = xPer * this.getPageSize(page).getHeight();
-
-        showLog(format("%s / %s", xReal, yReal));
+        showLog(format("xPer %s / yPer %s", xPer, yPer));
 
         WritableMap event = Arguments.createMap();
-        event.putString("message", "pageSingleTap|"+page+"|"+xReal+"|"+yReal);
+        event.putString("message", "pageSingleTap|"+page+"|"+xPer+"|"+yPer);
 
         ReactContext reactContext = (ReactContext)this.getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
