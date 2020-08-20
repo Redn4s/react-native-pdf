@@ -166,10 +166,13 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
         float xPer = xPositionInRealScale / this.getPageSize(page).getWidth() * 100;
         float yPer = yPositionInRealScale / this.getPageSize(page).getHeight() * 100;
 
-        showLog(format("%s / %s", xPer, yPer));
+        float xReal = xPer * this.getPageSize(page).getWidth();
+        float yReal = xPer * this.getPageSize(page).getHeight();
+
+        showLog(format("%s / %s", xReal, yReal));
 
         WritableMap event = Arguments.createMap();
-        event.putString("message", "pageSingleTap|"+page+"|"+xPer+"|"+yPer);
+        event.putString("message", "pageSingleTap|"+page+"|"+xReal+"|"+yReal);
 
         ReactContext reactContext = (ReactContext)this.getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
