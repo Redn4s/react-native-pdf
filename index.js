@@ -18,9 +18,6 @@ import {
     Image
 } from 'react-native';
 
-import { ProgressBar } from '@react-native-community/progress-bar-android'
-import { ProgressView } from '@react-native-community/progress-view'
-
 import RNFetchBlob from 'rn-fetch-blob';
 
 const SHA1 = require('crypto-js/sha1');
@@ -400,18 +397,8 @@ export default class Pdf extends Component {
                                 {this.props.activityIndicator
                                     ? this.props.activityIndicator
                                     : Platform.OS === 'android'
-                                        ? <ProgressBar
-                                            progress={this.state.progress}
-                                            indeterminate={false}
-                                            styleAttr="Horizontal"
-                                            style={styles.progressBar}
-                                            {...this.props.activityIndicatorProps}
-                                        />
-                                        : <ProgressView
-                                            progress={this.state.progress}
-                                            style={styles.progressBar}
-                                            {...this.props.activityIndicatorProps}
-                                        />}
+                                        ? <Text>YOLO</Text>
+                                        : <Text>YOLO</Text>}
                             </View>):(
                                 Platform.OS === "android"?(
                                         <PdfCustom
