@@ -160,13 +160,19 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
         //Constants.Pinch.MINIMUM_ZOOM = this.minScale;
         //Constants.Pinch.MAXIMUM_ZOOM = this.maxScale;
 
+        // Breedte van de PDF pagina = 1440.0
         showLog(format("page getWidth / %s", this.getPageSize(page).getWidth()));
+        // Hoogte van de PDF pagina = 1863.0
         showLog(format("page getHeight / %s", this.getPageSize(page).getHeight()));
 
+        // x-coordinaat van event tov viewport
         showLog(format("getX / %s", e.getX()));
+        // y-coordinaat van event tov viewport
         showLog(format("getY / %s", e.getY()));
 
+        // Afstand tov linkse kant van de app
         showLog(format("getCurrentXOffset / %s", -this.getCurrentXOffset()));
+        // Afstand tov bovenkant kant van de app
         showLog(format("getCurrentYOffset / %s", -this.getCurrentYOffset()));
 
         float xPositionInRealScale = this.toRealScale(-this.getCurrentXOffset() + e.getX());
@@ -175,13 +181,15 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
         showLog(format("xPositionInRealScale / %s", xPositionInRealScale));
         showLog(format("yPositionInRealScale / %s", yPositionInRealScale));
 
-        float xPer = xPositionInRealScale / this.getPageSize(page).getWidth() * 100;
-        float yPer = yPositionInRealScale / this.getPageSize(page).getHeight() * 100;
+        showLog(format("page / %s", page));
 
-        showLog(format("xPer %s / yPer %s", xPer, yPer));
+        float xReal = xPositionInRealScale - ((page - 1) * this.getPageSize(page).getWidth());
+        float yReal = yPositionInRealScale - ((page - 1) * this.getPageSize(page).getHeight());
+
+        showLog(format("xReal %s / yReal %s", xReal, yReal));
 
         WritableMap event = Arguments.createMap();
-        event.putString("message", "pageSingleTap|"+page+"|"+xPer+"|"+yPer);
+        event.putString("message", "pageSingleTap|"+page+"|"+xReal+"|"+yReal);
 
         ReactContext reactContext = (ReactContext)this.getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
