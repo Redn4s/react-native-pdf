@@ -15,7 +15,8 @@ import {
     Platform,
     ViewPropTypes,
     StyleSheet,
-    Image
+    Image,
+    Text,
 } from 'react-native';
 
 import RNFetchBlob from 'rn-fetch-blob';
